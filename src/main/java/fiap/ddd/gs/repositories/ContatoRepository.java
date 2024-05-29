@@ -5,7 +5,6 @@ import fiap.ddd.gs.entities.Login;
 import fiap.ddd.gs.infrastructure.OracleDbConfiguration;
 import fiap.ddd.gs.utils.Log4Logger;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,6 +83,8 @@ public class ContatoRepository {
         }
     }
 
+
+
     public void update(Contato contato) {
         try (Connection conn = OracleDbConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME = ?, TELEFONE = ?, MENSAGEM = ?, ID_LOGIN = ? WHERE ID = ?")) {
@@ -121,10 +122,9 @@ public class ContatoRepository {
         String mensagem = rs.getString("MENSAGEM");
         int idLogin = rs.getInt("ID_LOGIN");
 
+
         LoginRepository loginRepository = new LoginRepository();
         Login login = loginRepository.getById(idLogin).orElse(null);
-
-
 
         return new Contato(id, nome, telefone, mensagem, login);
     }

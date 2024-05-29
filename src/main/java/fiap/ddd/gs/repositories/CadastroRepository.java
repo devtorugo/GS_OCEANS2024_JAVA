@@ -78,7 +78,7 @@ public class CadastroRepository {
                 if (rs.next()) {
                     return rs.getInt(1) + 1;
                 }
-                // Se não houver registros na tabela, retornar 1 como o primeiro ID
+
                 return 1;
             }
         }

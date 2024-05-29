@@ -7,6 +7,8 @@ public class Cadastro extends _BaseEntity{
     private String causaSocial;
     private String senha;
 
+    public Cadastro() {}
+
     public Cadastro(int id, String nome, String sobrenome, String email, String causaSocial, String senha) {
         super(id);
         this.nome = nome;

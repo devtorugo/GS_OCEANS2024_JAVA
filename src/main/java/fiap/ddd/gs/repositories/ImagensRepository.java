@@ -54,7 +54,7 @@ public class ImagensRepository {
             int nextId = getNextId(conn);
             imagem.setId(nextId);
 
-            try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_ARQUIVO, TAMANHO_ARQUIVO, ID_ESPECIME) VALUES (?, ?, ?, ?)")) {
+            try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_ARQUIVO, TAMANHO_ARQUIVO, ID_ESPECIMES) VALUES (?, ?, ?, ?)")) {
                 stmt.setInt(1, imagem.getId());
                 stmt.setString(2, imagem.getNomeArquivo());
                 stmt.setDouble(3, imagem.getTamanhoAequivo());
@@ -83,7 +83,7 @@ public class ImagensRepository {
 
     public void update(Imagens imagem) {
         try (Connection conn = OracleDbConfiguration.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_ARQUIVO = ?, TAMANHO_ARQUIVO = ?, ID_ESPECIME = ? WHERE ID = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_ARQUIVO = ?, TAMANHO_ARQUIVO = ?, ID_ESPECIMES = ? WHERE ID = ?")) {
             stmt.setString(1, imagem.getNomeArquivo());
             stmt.setDouble(2, imagem.getTamanhoAequivo());
             stmt.setInt(3, imagem.getEspecimes().getId());
@@ -114,7 +114,7 @@ public class ImagensRepository {
         int id = rs.getInt("ID");
         String nomeArquivo = rs.getString("NOME_ARQUIVO");
         double tamanhoArquivo = rs.getDouble("TAMANHO_ARQUIVO");
-        int idEspecime = rs.getInt("ID_ESPECIME");
+        int idEspecime = rs.getInt("ID_ESPECIMES");
 
         EspecimesRepository especimesRepository = new EspecimesRepository();
         Especimes especime = especimesRepository.getById(idEspecime).orElse(null);

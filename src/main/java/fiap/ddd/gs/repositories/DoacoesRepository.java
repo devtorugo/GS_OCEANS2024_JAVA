@@ -61,7 +61,12 @@ public class DoacoesRepository {
                 stmt.setString(4, doacao.getCep());
                 stmt.setDouble(5, doacao.getValorDoacao());
                 stmt.setString(6, doacao.getDescricao());
-                stmt.setInt(7, doacao.getLogin().getId());
+
+                if (doacao.getLogin() != null) {
+                    stmt.setInt(7, doacao.getLogin().getId());
+                } else {
+                    stmt.setNull(7, java.sql.Types.INTEGER);
+                }
 
                 stmt.executeUpdate();
             }
@@ -93,7 +98,13 @@ public class DoacoesRepository {
             stmt.setString(3, doacao.getCep());
             stmt.setDouble(4, doacao.getValorDoacao());
             stmt.setString(5, doacao.getDescricao());
-            stmt.setInt(6, doacao.getLogin().getId());
+
+            if (doacao.getLogin() != null) {
+                stmt.setInt(6, doacao.getLogin().getId());
+            } else {
+                stmt.setNull(6, java.sql.Types.INTEGER);
+            }
+
             stmt.setInt(7, doacao.getId());
 
             stmt.executeUpdate();
@@ -126,8 +137,11 @@ public class DoacoesRepository {
         String descricao = rs.getString("DESCRICAO_DOACAO");
         int idLogin = rs.getInt("ID_LOGIN");
 
-        LoginRepository loginRepository = new LoginRepository();
-        Login login = loginRepository.getById(idLogin).orElse(null);
+        Login login = null;
+        if (!rs.wasNull()) {
+            LoginRepository loginRepository = new LoginRepository();
+            login = loginRepository.getById(idLogin).orElse(null);
+        }
 
         return new Doacoes(id, nomeDoador, cpf, cep, valorDoacao, descricao, login);
     }

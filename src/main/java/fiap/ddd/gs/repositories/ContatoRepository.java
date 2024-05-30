@@ -60,7 +60,7 @@ public class ContatoRepository {
                 stmt.setString(3, contato.getTelefone());
                 stmt.setString(4, contato.getMensagem());
 
-                // Verifica se o login é nulo antes de definir o ID_LOGIN
+
                 if (contato.getLogin() != null) {
                     stmt.setInt(5, contato.getLogin().getId());
                 } else {

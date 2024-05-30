@@ -11,6 +11,15 @@ public class Especimes extends _BaseEntity{
 
     public Especimes(){}
 
+    public Especimes(int id, String nomeEspecie, String localizacaoGeografica, String descricao, String ameacas, Login login) {
+        super(id);
+        this.nomeEspecie = nomeEspecie;
+        this.localizacaoGeografica = localizacaoGeografica;
+        this.descricao = descricao;
+        this.ameacas = ameacas;
+        this.login = login;
+    }
+
     public String getNomeEspecie() {
         return nomeEspecie;
     }

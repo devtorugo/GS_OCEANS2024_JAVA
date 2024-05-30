@@ -59,7 +59,13 @@ public class ContatoRepository {
                 stmt.setString(2, contato.getNome());
                 stmt.setString(3, contato.getTelefone());
                 stmt.setString(4, contato.getMensagem());
-                stmt.setInt(5, contato.getLogin().getId());
+
+                // Verifica se o login é nulo antes de definir o ID_LOGIN
+                if (contato.getLogin() != null) {
+                    stmt.setInt(5, contato.getLogin().getId());
+                } else {
+                    stmt.setNull(5, java.sql.Types.INTEGER);
+                }
 
                 stmt.executeUpdate();
             }
@@ -83,15 +89,20 @@ public class ContatoRepository {
         }
     }
 
-
-
     public void update(Contato contato) {
         try (Connection conn = OracleDbConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME = ?, TELEFONE = ?, MENSAGEM = ?, ID_LOGIN = ? WHERE ID = ?")) {
             stmt.setString(1, contato.getNome());
             stmt.setString(2, contato.getTelefone());
             stmt.setString(3, contato.getMensagem());
-            stmt.setInt(4, contato.getLogin().getId());
+
+
+            if (contato.getLogin() != null) {
+                stmt.setInt(4, contato.getLogin().getId());
+            } else {
+                stmt.setNull(4, java.sql.Types.INTEGER);
+            }
+
             stmt.setInt(5, contato.getId());
 
             stmt.executeUpdate();
@@ -122,11 +133,13 @@ public class ContatoRepository {
         String mensagem = rs.getString("MENSAGEM");
         int idLogin = rs.getInt("ID_LOGIN");
 
+        Login login = null;
+        if (!rs.wasNull()) {
 
-        LoginRepository loginRepository = new LoginRepository();
-        Login login = loginRepository.getById(idLogin).orElse(null);
+            LoginRepository loginRepository = new LoginRepository();
+            login = loginRepository.getById(idLogin).orElse(null);
+        }
 
         return new Contato(id, nome, telefone, mensagem, login);
     }
 }
-

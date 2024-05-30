@@ -54,7 +54,7 @@ public class EspecimesRepository {
             int nextId = getNextId(conn);
             especime.setId(nextId);
 
-            try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_DA_ESPECIE, LOCALIZACAO_GEOGRAFICA, DESCRICAO_DO_ANIMAL, AMEACAS, ID_LOGIN) VALUES (?, ?, ?, ?, ?, ?)")) {
+            try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_DA_ESPECIME, LOCALIZACAO_GEOGRAFICA, DESCRICAO_DO_ANIMAL, AMEACAS, ID_LOGIN) VALUES (?, ?, ?, ?, ?, ?)")) {
                 stmt.setInt(1, especime.getId());
                 stmt.setString(2, especime.getNomeEspecie());
                 stmt.setString(3, especime.getLocalizacaoGeografica());
@@ -85,7 +85,7 @@ public class EspecimesRepository {
 
     public void update(Especimes especime) {
         try (Connection conn = OracleDbConfiguration.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_DA_ESPECIE = ?, LOCALIZACAO_GEOGRAFICA = ?, DESCRICAO_DO_ANIMAL = ?, AMEACAS = ?, ID_LOGIN = ? WHERE ID = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_DA_ESPECIME = ?, LOCALIZACAO_GEOGRAFICA = ?, DESCRICAO_DO_ANIMAL = ?, AMEACAS = ?, ID_LOGIN = ? WHERE ID = ?")) {
             stmt.setString(1, especime.getNomeEspecie());
             stmt.setString(2, especime.getLocalizacaoGeografica());
             stmt.setString(3, especime.getDescricao());
@@ -116,7 +116,7 @@ public class EspecimesRepository {
 
     private Especimes mapResultSetToEspecimes(ResultSet rs) throws SQLException {
         int id = rs.getInt("ID");
-        String nomeEspecie = rs.getString("NOME_DA_ESPECIE");
+        String nomeEspecie = rs.getString("NOME_DA_ESPECIME");
         String localizacaoGeografica = rs.getString("LOCALIZACAO_GEOGRAFICA");
         String descricao = rs.getString("DESCRICAO_DO_ANIMAL");
         String ameacas = rs.getString("AMEACAS");

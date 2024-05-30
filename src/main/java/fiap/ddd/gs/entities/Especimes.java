@@ -7,7 +7,7 @@ public class Especimes extends _BaseEntity{
     private String descricao;
     private String ameacas;
     private Login login;
-    private Imagens imagens;
+
 
     public Especimes(){}
 
@@ -51,13 +51,7 @@ public class Especimes extends _BaseEntity{
         this.login = login;
     }
 
-    public Imagens getImagens() {
-        return imagens;
-    }
 
-    public void setImagens(Imagens imagens) {
-        this.imagens = imagens;
-    }
 
     @Override
     public String toString() {
@@ -67,7 +61,6 @@ public class Especimes extends _BaseEntity{
                 ", descricao='" + descricao + '\'' +
                 ", ameacas='" + ameacas + '\'' +
                 ", login=" + login +
-                ", imagens=" + imagens +
                 "} " + super.toString();
     }
 }

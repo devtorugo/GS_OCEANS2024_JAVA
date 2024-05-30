@@ -4,13 +4,15 @@ public class Imagens extends _BaseEntity{
 
     private String nomeArquivo;
     private double tamanhoAequivo;
+    private Especimes especimes;
 
     public Imagens(){}
 
-    public Imagens(int id, String nomeArquivo, double tamanhoAequivo) {
+    public Imagens(int id, String nomeArquivo, double tamanhoAequivo, Especimes especimes) {
         super(id);
         this.nomeArquivo = nomeArquivo;
         this.tamanhoAequivo = tamanhoAequivo;
+        this.especimes = especimes;
     }
 
     public String getNomeArquivo() {
@@ -29,11 +31,20 @@ public class Imagens extends _BaseEntity{
         this.tamanhoAequivo = tamanhoAequivo;
     }
 
+    public Especimes getEspecimes() {
+        return especimes;
+    }
+
+    public void setEspecimes(Especimes especimes) {
+        this.especimes = especimes;
+    }
+
     @Override
     public String toString() {
         return "Imagens{" +
                 "nomeArquivo='" + nomeArquivo + '\'' +
                 ", tamanhoAequivo=" + tamanhoAequivo +
+                ", especimes=" + especimes +
                 "} " + super.toString();
     }
 }

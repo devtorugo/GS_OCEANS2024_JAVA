@@ -54,7 +54,7 @@ public class DoacoesRepository {
             int nextId = getNextId(conn);
             doacao.setId(nextId);
 
-            try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_DOADOR, CPF, CEP, VALOR_DA_DOACAO, DESCRICAO_DA_DOACAO, ID_LOGIN) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+            try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_DO_DOADOR, CPF, CEP, VALOR_DA_DOACAO, DESCRICAO_DOACAO, ID_LOGIN) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
                 stmt.setInt(1, doacao.getId());
                 stmt.setString(2, doacao.getNomeDoador());
                 stmt.setString(3, doacao.getCpf());
@@ -87,7 +87,7 @@ public class DoacoesRepository {
 
     public void update(Doacoes doacao) {
         try (Connection conn = OracleDbConfiguration.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_DOADOR = ?, CPF = ?, CEP = ?, VALOR_DA_DOACAO = ?, DESCRICAO_DA_DOACAO = ?, ID_LOGIN = ? WHERE ID = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_DO_DOADOR = ?, CPF = ?, CEP = ?, VALOR_DA_DOACAO = ?, DESCRICAO_DOACAO = ?, ID_LOGIN = ? WHERE ID = ?")) {
             stmt.setString(1, doacao.getNomeDoador());
             stmt.setString(2, doacao.getCpf());
             stmt.setString(3, doacao.getCep());
@@ -123,7 +123,7 @@ public class DoacoesRepository {
         String cpf = rs.getString("CPF");
         String cep = rs.getString("CEP");
         double valorDoacao = rs.getDouble("VALOR_DA_DOACAO");
-        String descricao = rs.getString("DESCRICAO_DA_DOACAO");
+        String descricao = rs.getString("DESCRICAO_DOACAO");
         int idLogin = rs.getInt("ID_LOGIN");
 
         LoginRepository loginRepository = new LoginRepository();

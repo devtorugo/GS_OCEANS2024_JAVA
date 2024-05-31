@@ -72,17 +72,6 @@ public class EspecimesRepository {
         }
     }
 
-    private int getNextId(Connection conn) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement("SELECT MAX(ID) FROM " + TB_NAME)) {
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) + 1;
-                }
-                return 1;
-            }
-        }
-    }
-
     public void update(Especimes especime) {
         try (Connection conn = OracleDbConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_DA_ESPECIME = ?, LOCALIZACAO_GEOGRAFICA = ?, DESCRICAO_DO_ANIMAL = ?, AMEACAS = ?, ID_LOGIN = ? WHERE ID = ?")) {
@@ -114,6 +103,17 @@ public class EspecimesRepository {
         }
     }
 
+    private int getNextId(Connection conn) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement("SELECT MAX(ID) FROM " + TB_NAME)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) + 1;
+                }
+                return 1;
+            }
+        }
+    }
+
     private Especimes mapResultSetToEspecimes(ResultSet rs) throws SQLException {
         int id = rs.getInt("ID");
         String nomeEspecie = rs.getString("NOME_DA_ESPECIME");
@@ -122,6 +122,7 @@ public class EspecimesRepository {
         String ameacas = rs.getString("AMEACAS");
         int idLogin = rs.getInt("ID_LOGIN");
 
+        // Supondo que você tenha uma classe LoginRepository e um método getById para obter o Login por ID
         LoginRepository loginRepository = new LoginRepository();
         Login login = loginRepository.getById(idLogin).orElse(null);
 

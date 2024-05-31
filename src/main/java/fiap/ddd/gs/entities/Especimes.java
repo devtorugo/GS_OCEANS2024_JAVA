@@ -1,15 +1,19 @@
 package fiap.ddd.gs.entities;
 
-public class Especimes extends _BaseEntity{
+import fiap.ddd.gs.services.OpenCageService;
+
+public class Especimes extends _BaseEntity {
 
     private String nomeEspecie;
     private String localizacaoGeografica;
     private String descricao;
     private String ameacas;
     private Login login;
+    private double latitude;
+    private double longitude;
 
-
-    public Especimes(){}
+    public Especimes() {
+    }
 
     public Especimes(int id, String nomeEspecie, String localizacaoGeografica, String descricao, String ameacas, Login login) {
         super(id);
@@ -60,7 +64,29 @@ public class Especimes extends _BaseEntity{
         this.login = login;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public OpenCageService.Coordenadas obterCoordenadas() {
+        OpenCageService service = new OpenCageService();
+        OpenCageService.Coordenadas coordenadas = service.obterCoordenadas(this.localizacaoGeografica);
+        this.latitude = coordenadas.getLatitude();
+        this.longitude = coordenadas.getLongitude();
+        return coordenadas;
+    }
 
     @Override
     public String toString() {
@@ -70,6 +96,8 @@ public class Especimes extends _BaseEntity{
                 ", descricao='" + descricao + '\'' +
                 ", ameacas='" + ameacas + '\'' +
                 ", login=" + login +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 "} " + super.toString();
     }
 }

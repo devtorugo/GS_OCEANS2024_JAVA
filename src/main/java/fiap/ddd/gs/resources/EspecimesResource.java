@@ -2,6 +2,7 @@ package fiap.ddd.gs.resources;
 
 import fiap.ddd.gs.entities.Especimes;
 import fiap.ddd.gs.repositories.EspecimesRepository;
+import fiap.ddd.gs.services.OpenCageService;
 import fiap.ddd.gs.utils.Log4Logger;
 
 import jakarta.ws.rs.*;
@@ -49,6 +50,13 @@ public class EspecimesResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response adicionarEspecime(Especimes especime) {
         try {
+
+            OpenCageService.Coordenadas coordenadas = especime.obterCoordenadas();
+
+
+            especime.setLatitude(coordenadas.getLatitude());
+            especime.setLongitude(coordenadas.getLongitude());
+
             especimesRepository.create(especime);
             return Response.status(Response.Status.CREATED).entity(especime).build();
         } catch (Exception e) {
@@ -56,6 +64,7 @@ public class EspecimesResource {
             throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PUT
     @Path("/{id}")

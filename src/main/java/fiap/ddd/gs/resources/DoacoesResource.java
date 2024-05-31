@@ -3,11 +3,9 @@ package fiap.ddd.gs.resources;
 import fiap.ddd.gs.entities.Doacoes;
 import fiap.ddd.gs.repositories.DoacoesRepository;
 import fiap.ddd.gs.utils.Log4Logger;
-
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -47,15 +45,17 @@ public class DoacoesResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response adicionarDoacao(Doacoes doacao) {
         try {
             doacoesRepository.create(doacao);
             return Response.status(Response.Status.CREATED).entity(doacao).build();
         } catch (Exception e) {
             logger.error("Erro ao adicionar doação: " + e.getMessage());
-            throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException("Erro ao adicionar doação", e);
         }
     }
+
 
     @PUT
     @Path("/{id}")

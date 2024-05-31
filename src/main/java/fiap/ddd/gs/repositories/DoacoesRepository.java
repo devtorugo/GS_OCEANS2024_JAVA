@@ -3,6 +3,7 @@ package fiap.ddd.gs.repositories;
 import fiap.ddd.gs.entities.Doacoes;
 import fiap.ddd.gs.entities.Login;
 import fiap.ddd.gs.infrastructure.OracleDbConfiguration;
+import fiap.ddd.gs.services.ViaCepService;
 import fiap.ddd.gs.utils.Log4Logger;
 
 import java.sql.Connection;
@@ -53,6 +54,14 @@ public class DoacoesRepository {
         try (Connection conn = OracleDbConfiguration.getConnection()) {
             int nextId = getNextId(conn);
             doacao.setId(nextId);
+
+            // Obter o endereço utilizando a API ViaCep
+            ViaCepService viaCepService = new ViaCepService();
+            ViaCepService.Endereco endereco = viaCepService.buscarEnderecoPorCep(doacao.getCep());
+            if (endereco != null) {
+                doacao.setDescricao(endereco.getLogradouro() + ", " + endereco.getBairro() + ", " + endereco.getLocalidade() + " - " + endereco.getUf());
+                doacao.setEndereco(endereco);
+            }
 
             try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_DO_DOADOR, CPF, CEP, VALOR_DA_DOACAO, DESCRICAO_DOACAO, ID_LOGIN) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
                 stmt.setInt(1, doacao.getId());
@@ -135,14 +144,19 @@ public class DoacoesRepository {
         String cep = rs.getString("CEP");
         double valorDoacao = rs.getDouble("VALOR_DA_DOACAO");
         String descricao = rs.getString("DESCRICAO_DOACAO");
-        int idLogin = rs.getInt("ID_LOGIN");
+        int loginId = rs.getInt("ID_LOGIN");
 
-        Login login = null;
-        if (!rs.wasNull()) {
-            LoginRepository loginRepository = new LoginRepository();
-            login = loginRepository.getById(idLogin).orElse(null);
+        LoginRepository loginRepository = new LoginRepository();
+        Login login = loginRepository.getById(loginId).orElse(null);
+
+        ViaCepService.Endereco endereco = null;
+        if (cep != null && !cep.isEmpty()) {
+            ViaCepService viaCepService = new ViaCepService();
+            endereco = viaCepService.buscarEnderecoPorCep(cep);
         }
 
-        return new Doacoes(id, nomeDoador, cpf, cep, valorDoacao, descricao, login);
+        Doacoes doacao = new Doacoes(id, nomeDoador, cpf, cep, valorDoacao, descricao, login);
+        doacao.setEndereco(endereco);
+        return doacao;
     }
 }

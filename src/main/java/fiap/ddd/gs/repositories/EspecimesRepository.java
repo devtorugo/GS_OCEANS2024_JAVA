@@ -122,7 +122,7 @@ public class EspecimesRepository {
         String ameacas = rs.getString("AMEACAS");
         int idLogin = rs.getInt("ID_LOGIN");
 
-        // Supondo que você tenha uma classe LoginRepository e um método getById para obter o Login por ID
+
         LoginRepository loginRepository = new LoginRepository();
         Login login = loginRepository.getById(idLogin).orElse(null);
 

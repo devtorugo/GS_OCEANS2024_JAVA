@@ -3,15 +3,15 @@ package fiap.ddd.gs.entities;
 public class Imagens extends _BaseEntity{
 
     private String nomeArquivo;
-    private double tamanhoAequivo;
+    private double tamanhoArquivo;
     private Especimes especimes;
 
     public Imagens(){}
 
-    public Imagens(int id, String nomeArquivo, double tamanhoAequivo, Especimes especimes) {
+    public Imagens(int id, String nomeArquivo, double tamanhoArquivo, Especimes especimes) {
         super(id);
         this.nomeArquivo = nomeArquivo;
-        this.tamanhoAequivo = tamanhoAequivo;
+        this.tamanhoArquivo = tamanhoArquivo;
         this.especimes = especimes;
     }
 
@@ -23,12 +23,12 @@ public class Imagens extends _BaseEntity{
         this.nomeArquivo = nomeArquivo;
     }
 
-    public double getTamanhoAequivo() {
-        return tamanhoAequivo;
+    public double getTamanhoArquivo() {
+        return tamanhoArquivo;
     }
 
-    public void setTamanhoAequivo(double tamanhoAequivo) {
-        this.tamanhoAequivo = tamanhoAequivo;
+    public void setTamanhoArquivo(double tamanhoArquivo) {
+        this.tamanhoArquivo = tamanhoArquivo;
     }
 
     public Especimes getEspecimes() {
@@ -43,7 +43,7 @@ public class Imagens extends _BaseEntity{
     public String toString() {
         return "Imagens{" +
                 "nomeArquivo='" + nomeArquivo + '\'' +
-                ", tamanhoAequivo=" + tamanhoAequivo +
+                ", tamanhoAequivo=" + tamanhoArquivo +
                 ", especimes=" + especimes +
                 "} " + super.toString();
     }

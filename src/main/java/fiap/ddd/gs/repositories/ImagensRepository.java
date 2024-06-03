@@ -57,7 +57,7 @@ public class ImagensRepository {
             try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + TB_NAME + " (ID, NOME_ARQUIVO, TAMANHO_ARQUIVO, ID_ESPECIMES) VALUES (?, ?, ?, ?)")) {
                 stmt.setInt(1, imagem.getId());
                 stmt.setString(2, imagem.getNomeArquivo());
-                stmt.setDouble(3, imagem.getTamanhoAequivo());
+                stmt.setDouble(3, imagem.getTamanhoArquivo());
                 stmt.setInt(4, imagem.getEspecimes().getId());
 
                 stmt.executeUpdate();
@@ -85,7 +85,7 @@ public class ImagensRepository {
         try (Connection conn = OracleDbConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement("UPDATE " + TB_NAME + " SET NOME_ARQUIVO = ?, TAMANHO_ARQUIVO = ?, ID_ESPECIMES = ? WHERE ID = ?")) {
             stmt.setString(1, imagem.getNomeArquivo());
-            stmt.setDouble(2, imagem.getTamanhoAequivo());
+            stmt.setDouble(2, imagem.getTamanhoArquivo());
             stmt.setInt(3, imagem.getEspecimes().getId());
             stmt.setInt(4, imagem.getId());
 

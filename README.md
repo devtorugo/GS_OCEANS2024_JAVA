@@ -27,4 +27,4 @@ Este projeto é uma iniciativa colaborativa e está aberto a contribuições da 
 
 ## Autor
 
-Este projeto foi desenvolvido por **Victor Hugo como parte de um esforço conjunto para a preservação dos oceanos e a conscientização sobre a importância da conservação marinha.
+Este projeto foi desenvolvido por Victor Hugo como parte de um esforço conjunto para a preservação dos oceanos e a conscientização sobre a importância da conservação marinha.
